@@ -17,8 +17,7 @@ public class ImageConverter {
      * @return true if successful, false otherwise
      * @throws IOException if errors occur during writing
      */
-    public static boolean convertFormat(String inputImagePath,
-                                        String outputImagePath, String formatName) throws IOException {
+    public static boolean convertFormat(String inputImagePath, String outputImagePath, String formatName) throws IOException {
         FileInputStream inputStream = new FileInputStream(inputImagePath);
         FileOutputStream outputStream = new FileOutputStream(outputImagePath);
 
