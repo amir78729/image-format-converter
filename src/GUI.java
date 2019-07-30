@@ -1,17 +1,18 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.*;
 
 
-public class GUI implements ActionListener {
+public class GUI {
 
     private File file;
     private String inputImage;
     private String outputImage;
     private String formatName;
+
 
     public GUI(){
         final JFrame frame = new JFrame("Image Format Converter");
@@ -33,54 +34,62 @@ public class GUI implements ActionListener {
             }
         });
 
-        JRadioButton png = new JRadioButton(".png");
-        png.setMnemonic(KeyEvent.VK_B);
-        png.setActionCommand(".png");
-        png.setSelected(true);
+        final JPopupMenu popup = new JPopupMenu();
 
-        JRadioButton jpeg = new JRadioButton(".jpeg");
-        jpeg.setMnemonic(KeyEvent.VK_B);
-        jpeg.setActionCommand(".jpeg");
-
-        JRadioButton bmp = new JRadioButton(".bmp");
-        bmp.setMnemonic(KeyEvent.VK_B);
-        bmp.setActionCommand(".bmp");
-
-        JRadioButton gif = new JRadioButton(".gif");
-        gif.setMnemonic(KeyEvent.VK_B);
-        gif.setActionCommand(".gif");
-
-        ButtonGroup group = new ButtonGroup();
-        group.add(png);
-        group.add(jpeg);
-        group.add(bmp);
-        group.add(gif);
-
-        jpeg.addActionListener(this);
-        png.addActionListener(this);
-        bmp.addActionListener(this);
-        gif.addActionListener(this);
+        JMenuItem jpeg = new JMenuItem(new AbstractAction(".jpeg") {
+            public void actionPerformed(ActionEvent e) {
+                formatName = "JPEG";
+            }
+        });
+        popup.add(jpeg);
 
 
-        JPanel formatsPanel = new JPanel(new FlowLayout());
-        formatsPanel.add(png);
-        formatsPanel.add(jpeg);
-        formatsPanel.add(bmp);
-        formatsPanel.add(gif);
+        JMenuItem png = new JMenuItem(new AbstractAction(".png") {
+            public void actionPerformed(ActionEvent e) {
+                formatName = "PNG";
+            }
+        });
+        popup.add(png);
 
-        frame.add(formatsPanel, BorderLayout.CENTER);
+
+        JMenuItem bmp = new JMenuItem(new AbstractAction(".bmp") {
+            public void actionPerformed(ActionEvent e) {
+                formatName = "BMP";
+            }
+        });
+        popup.add(bmp);
+
+
+        JMenuItem gif = new JMenuItem(new AbstractAction(".gif") {
+            public void actionPerformed(ActionEvent e) {
+                formatName = "GIF";
+            }
+        });
+        popup.add(gif);
+
+
+        JButton selectFormat = new JButton("select a format");
+        selectFormat.setBackground(Color.magenta);
+        selectFormat.setVisible(true);
+
+        selectFormat.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                popup.show(e.getComponent(), e.getX(), e.getY());
+            }
+        });
+
+
+        frame.add(selectFormat , BorderLayout.SOUTH);
+
 
         frame.setLayout(new BorderLayout());
-        frame.add(chooseYourFileButton , BorderLayout.SOUTH);
+//        frame.add(chooseYourFileButton , BorderLayout.SOUTH);
         frame.setSize(500, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
-    }
 
 
 //    public static void main(String[] args) throws Exception {

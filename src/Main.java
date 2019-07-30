@@ -3,9 +3,9 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) {
-//        String inputImage = "D:/negar.jpg";
-//        String outputImage = "D:/output.png";
-//        String formatName = "PNG";
+        String inputImage = "D:/negar.jpg";
+        String outputImage = "D:/output.png";
+        String formatName = "PNG";
 //        try {
 //            boolean result = ImageConverter.convertFormat(inputImage,
 //                    outputImage, formatName);
@@ -19,6 +19,7 @@ public class Main {
 //            ex.printStackTrace();
 //        }
 
-        new GUI();
+//        new GUI();
+        new GraphicalUserInterface();
     }
 }
