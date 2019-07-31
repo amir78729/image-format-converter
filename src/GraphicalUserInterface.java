@@ -13,33 +13,22 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
     private String outputImage= "C:\\Users\\Amirhossein A\\Desktop\\^_^.jpg_.png";
     private String formatName;
     private JButton convert;
+    private JButton chooseYourFileButton;
+    private boolean fileIsSelected = false;
+    private boolean formatIsSelected = false;
     public GraphicalUserInterface(){
 
         super("IMAGE FORMAT CONVERTER");
         setLayout(new BorderLayout());
+        setSize(500, 500);
         convert = new JButton("convert!");
         convert.setEnabled(false);
 
         //filechooser
-        JButton chooseYourFileButton = new JButton("browse");
-        chooseYourFileButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                final JFileChooser fileChooser = new JFileChooser();
-                int returnValue = fileChooser.showOpenDialog(fileChooser);
-                if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    file = fileChooser.getSelectedFile();
-                    //This is where a real application would open the file.
 
-                    System.out.println("File: " + file.getName());
-                    System.out.println("Path: " + file.getAbsolutePath());
+        chooseYourFileButton = new JButton("browse");
+        chooseYourFileButton.addActionListener(this);
 
-
-                } else {
-                    System.out.println("Open command cancelled by user.");
-                }
-                System.out.println(returnValue);
-            }
-        });
 
         //showing pop-up
 
@@ -48,37 +37,53 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
         final JPopupMenu popup = new JPopupMenu();
         JMenuItem jpeg = new JMenuItem(new AbstractAction(".jpeg") {
             public void actionPerformed(ActionEvent e) {
-                formatName = "JPEG";
+                formatName = "jpeg";
                 selectFormat.setText(".jpeg");
-                convert.setEnabled(true);
-                convert.setText("Convert to ." + formatName + "!");
+                formatIsSelected = true;
+                convert.setText("Convert to \"." + formatName + "\"!");
+                if(fileIsSelected){
+                    convert.setEnabled(true);
+                    convert.setText("Convert \"" + file.getName() + "\" to \"." + formatName + "\"!");
+                }
             }
         });
         popup.add(jpeg);
         JMenuItem png = new JMenuItem(new AbstractAction(".png") {
             public void actionPerformed(ActionEvent e) {
-                formatName = "PNG";
+                formatName = "png";
                 selectFormat.setText(".png");
-                convert.setEnabled(true);
-                convert.setText("Convert to ." + formatName + "!");
+                formatIsSelected = true;
+                convert.setText("Convert to \"." + formatName + "\"!");
+                if(fileIsSelected){
+                    convert.setEnabled(true);
+                    convert.setText("Convert \"" + file.getName() + "\" to \"." + formatName + "\"!");
+                }
             }
         });
         popup.add(png);
         JMenuItem bmp = new JMenuItem(new AbstractAction(".bmp") {
             public void actionPerformed(ActionEvent e) {
-                formatName = "BMP";
+                formatName = "bmp";
                 selectFormat.setText(".bmp");
-                convert.setEnabled(true);
-                convert.setText("Convert to ." + formatName + "!");
+                formatIsSelected = true;
+                convert.setText("Convert to \"." + formatName + "\"!");
+                if(fileIsSelected){
+                    convert.setEnabled(true);
+                    convert.setText("Convert \"" + file.getName() + "\" to \"." + formatName + "\"!");
+                }
             }
         });
         popup.add(bmp);
         JMenuItem gif = new JMenuItem(new AbstractAction(".gif") {
             public void actionPerformed(ActionEvent e) {
-                formatName = "GIF";
+                formatName = "gif";
                 selectFormat.setText(".gif");
-                convert.setEnabled(true);
-                convert.setText("Convert to ." + formatName + "!");
+                formatIsSelected = true;
+                convert.setText("Convert to \"." + formatName + "\"!");
+                if(fileIsSelected){
+                    convert.setEnabled(true);
+                    convert.setText("Convert \"" + file.getName() + "\" to \"." + formatName + "\"!");
+                }
             }
         });
         popup.add(gif);
@@ -113,6 +118,34 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
                 System.out.println("Error during converting image.");
                 ex.printStackTrace();
             }
+        }else if(e.getSource() == chooseYourFileButton){
+            final JFileChooser fileChooser = new JFileChooser("C:\\Users\\Amirhossein A\\Desktop");
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            int returnValue = fileChooser.showOpenDialog(fileChooser);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                file = fileChooser.getSelectedFile();
+                //This is where a real application would open the file.
+                fileIsSelected = true;
+                convert.setText("Convert \"" + file.getName() + "\"!");
+                if(formatIsSelected){
+                    convert.setEnabled(true);
+                    convert.setText("Convert \"" + file.getName() + "\" to \"." + formatName + "\"!");
+                }
+
+                System.out.println("File: " + file.getName());
+                System.out.println("Path: " + file.getAbsolutePath());
+
+                inputImage = file.getName();
+                System.out.println(inputImage);
+
+                outputImage = file.getName() + "_." + formatName;
+                System.out.println(outputImage);
+
+
+            } else {
+                System.out.println("Open command cancelled by user.");
+            }
+            System.out.println(returnValue);
         }
     }
 }
