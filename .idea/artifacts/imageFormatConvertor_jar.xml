@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="imageFormatConvertor:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/imageFormatConvertor_jar</output-path>
+    <root id="archive" name="imageFormatConvertor.jar">
+      <element id="module-output" name="imageFormatConvertor" />
+    </root>
+  </artifact>
+</component>

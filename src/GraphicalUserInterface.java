@@ -47,6 +47,8 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
     public GraphicalUserInterface(){
 
         super("IMAGE FORMAT CONVERTER");
+        ImageIcon imageIcon = new ImageIcon("convert.png");
+        setIconImage(imageIcon.getImage());
         setLayout(new BorderLayout());
         setSize(600, 200);
         convert = new JButton("convert!");
