@@ -15,9 +15,18 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
     private JButton convert;
     private JButton selectingPictureButton;
     private JButton selectingFormatButton;
-    private JTextArea showingInformation;
+    private JLabel showingInformation;
+    private JLabel showStatus;
+    private JLabel selectingFormatLabel;
+    private JLabel selectingPictureLabel;
     private boolean fileIsSelected = false;
     private boolean formatIsSelected = false;
+
+    Font consolas = new Font("Consolas",Font.BOLD, 12);
+    Font consolasBold = new Font("Consolas",Font.BOLD, 15);
+    Color noColor = new Color(0,0,0 , 0);
+    Color red = new Color(200,0,0);
+    Color darkGreen = new Color(0,150,0);
 
     /**
      * a method that can erase the format of our file
@@ -38,15 +47,16 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
     public GraphicalUserInterface(){
 
         super("IMAGE FORMAT CONVERTER");
-        Font consolas = new Font("Consolas",Font.BOLD, 12);
         setLayout(new BorderLayout());
-        setSize(500, 500);
+        setSize(600, 200);
         convert = new JButton("convert!");
         convert.setEnabled(false);
         convert.addActionListener(this);
         convert.setBorderPainted(false);
         convert.setFocusable(false);
         convert.setFont(consolas);
+        convert.setBackground(new Color(20,20,20));
+        convert.setForeground(new Color(200,200,0));
 
         //filechooser
 
@@ -56,6 +66,8 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
         selectingPictureButton.setFocusable(false);
         selectingPictureButton.setPreferredSize(new Dimension(85,30));
         selectingPictureButton.setFont(consolas);
+        selectingPictureButton.setBackground(new Color(20,20,20));
+        selectingPictureButton.setForeground(Color.white);
 
 
 
@@ -66,6 +78,8 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
         selectingFormatButton.setFocusable(false);
         selectingFormatButton.setPreferredSize(new Dimension(85,30));
         selectingFormatButton.setFont(consolas);
+        selectingFormatButton.setBackground(new Color(20,20,20));
+        selectingFormatButton.setForeground(Color.white);
 
         final JPopupMenu popup = new JPopupMenu();
         JMenuItem jpeg = new JMenuItem(new AbstractAction(".jpeg") {
@@ -74,6 +88,7 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
                 selectingFormatButton.setText(".jpeg");
                 formatIsSelected = true;
                 convert.setText("Convert to \"." + formatName + "\"!");
+                selectingFormatLabel.setForeground(darkGreen);
                 if(fileIsSelected){
                     makeTheConvertButtonReady();
                 }
@@ -86,6 +101,7 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
                 selectingFormatButton.setText(".png");
                 formatIsSelected = true;
                 convert.setText("Convert to \"." + formatName + "\"!");
+                selectingFormatLabel.setForeground(darkGreen);
                 if(fileIsSelected){
                     makeTheConvertButtonReady();
                 }
@@ -98,6 +114,7 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
                 selectingFormatButton.setText(".bmp");
                 formatIsSelected = true;
                 convert.setText("Convert to \"." + formatName + "\"!");
+                selectingFormatLabel.setForeground(darkGreen);
                 if(fileIsSelected){
                     makeTheConvertButtonReady();
                 }
@@ -110,6 +127,7 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
                 selectingFormatButton.setText(".gif");
                 formatIsSelected = true;
                 convert.setText("Convert to \"." + formatName + "\"!");
+                selectingFormatLabel.setForeground(darkGreen);
                 if(fileIsSelected){
                     makeTheConvertButtonReady();
                 }
@@ -123,15 +141,22 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
         });
 
         JPanel selectingPicturePanel = new JPanel(new FlowLayout());
-        JLabel selectingPictureLabel = new JLabel("SELECT AN IMAGE :");
+        selectingPicturePanel.setBackground(Color.black);
+        selectingPictureLabel = new JLabel("SELECT AN IMAGE :");
         selectingPictureLabel.setFont(consolas);
+        selectingPictureLabel.setBackground(noColor);
+        selectingPictureLabel.setForeground(red);
 
         selectingPicturePanel.add(selectingPictureLabel);
         selectingPicturePanel.add(selectingPictureButton);
 
         JPanel selectingFormatPanel = new JPanel(new FlowLayout());
-        JLabel selectingFormatLabel = new JLabel("SELECT A FORMAT :");
+        selectingFormatPanel.setBackground(Color.black);
+        selectingFormatLabel = new JLabel("SELECT A FORMAT :");
         selectingFormatLabel.setFont(consolas);
+        selectingFormatLabel.setBackground(noColor);
+        selectingFormatLabel.setForeground(red);
+
 
         selectingFormatPanel.add(selectingFormatLabel);
         selectingFormatPanel.add(selectingFormatButton);
@@ -140,11 +165,21 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
         formatAndImagePanel.add(selectingPicturePanel);
         formatAndImagePanel.add(selectingFormatPanel);
 
-        JPanel showingTheInfoOfThePicturePanel = new JPanel();
-        showingInformation = new JTextArea();
-        showingInformation.setEditable(false);
-        showingInformation.setFont(consolas);
+        JPanel showingTheInfoOfThePicturePanel = new JPanel(new GridLayout(2,1));
+        showingTheInfoOfThePicturePanel.setBackground(Color.black);
+        showingInformation = new JLabel();
+        showingInformation.setFont(consolasBold);
+        showingInformation.setBackground(new Color(0,0,0,0));
+        showingInformation.setForeground(Color.white);
+        showingInformation.setHorizontalAlignment(JLabel.CENTER);
         showingTheInfoOfThePicturePanel.add(showingInformation);
+        showStatus = new JLabel();
+        showStatus.setFont(consolasBold);
+        showStatus.setBackground(new Color(0,0,0,0));
+        showStatus.setForeground(Color.white);
+        showStatus.setHorizontalAlignment(JLabel.CENTER);
+        showingTheInfoOfThePicturePanel.add(showStatus);
+
 
         add(formatAndImagePanel, BorderLayout.NORTH);
         add(showingTheInfoOfThePicturePanel, BorderLayout.CENTER);
@@ -162,23 +197,37 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
         outputImage = stripExtension(file.getAbsolutePath()) + "." + formatName;
         System.out.println(outputImage);
         convert.setText("Convert \"" + file.getName() + "\" to \"" + stripExtension(file.getName()) + "." + formatName + "\"!");
+        showingInformation.setForeground(darkGreen);
         showingInformation.setText("\"" + file.getName() + "\" is going to be saved to the same path as a \" ." + formatName + " \" file:)");
+        showStatus.setForeground(Color.white);
+        showStatus.setText("ready to convert!");
+        showStatus.setFont(consolas);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == convert){
             System.out.println("CLICKED!");
+            showStatus.setForeground(Color.white);
+
+
+
             try {
                 boolean result = ImageConverter.convertFormat(inputImage,
                         outputImage, formatName);
                 if (result) {
                     System.out.println("Image converted successfully.");
+                    showStatus.setText("Image converted successfully ^_^");
+                    showStatus.setForeground(Color.green);
                 } else {
                     System.out.println("Could not convert image.");
+                    showStatus.setText("Could not convert image x_x");
+                    showStatus.setForeground(red);
                 }
             } catch (IOException ex) {
                 System.out.println("Error during converting image.");
+                showStatus.setText("Error during converting image x_x");
+                showStatus.setForeground(red);
                 ex.printStackTrace();
             }
         }else if(e.getSource() == selectingPictureButton){
@@ -190,6 +239,7 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
                 //This is where a real application would open the file.
                 fileIsSelected = true;
                 convert.setText("Convert \"" + file.getName() + "\"!");
+                selectingPictureLabel.setForeground(darkGreen);
                 if(formatIsSelected){
                     makeTheConvertButtonReady();
                 }
@@ -204,5 +254,17 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
             }
             System.out.println(returnValue);
         }
+
+    }
+
+    public void waiting(){
+        System.out.println("wait");
+        for (int i = 0 ; i<100000; i++){
+            showStatus.setText("-");
+            showStatus.setText("\\");
+            showStatus.setText("|");
+            showStatus.setText("/");
+        }
+
     }
 }
