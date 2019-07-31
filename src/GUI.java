@@ -17,8 +17,8 @@ public class GUI {
     public GUI(){
         final JFrame frame = new JFrame("Image Format Converter");
 
-        JButton chooseYourFileButton = new JButton("browse");
-        chooseYourFileButton.addActionListener(new ActionListener() {
+        JButton selectingPictureButton = new JButton("browse");
+        selectingPictureButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 final JFileChooser fileChooser = new JFileChooser();
                 int returnValue = fileChooser.showOpenDialog(frame);
@@ -68,22 +68,22 @@ public class GUI {
         popup.add(gif);
 
 
-        JButton selectFormat = new JButton("select a format");
-        selectFormat.setBackground(Color.magenta);
-        selectFormat.setVisible(true);
+        JButton selectingFormatButton = new JButton("select a format");
+        selectingFormatButton.setBackground(Color.magenta);
+        selectingFormatButton.setVisible(true);
 
-        selectFormat.addMouseListener(new MouseAdapter() {
+        selectingFormatButton.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 popup.show(e.getComponent(), e.getX(), e.getY());
             }
         });
 
 
-        frame.add(selectFormat , BorderLayout.SOUTH);
+        frame.add(selectingFormatButton , BorderLayout.SOUTH);
 
 
         frame.setLayout(new BorderLayout());
-//        frame.add(chooseYourFileButton , BorderLayout.SOUTH);
+//        frame.add(selectingPictureButton , BorderLayout.SOUTH);
         frame.setSize(500, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
