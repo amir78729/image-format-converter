@@ -23,6 +23,7 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
         setSize(500, 500);
         convert = new JButton("convert!");
         convert.setEnabled(false);
+        convert.addActionListener(this);
 
         //filechooser
 
@@ -135,10 +136,10 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
                 System.out.println("File: " + file.getName());
                 System.out.println("Path: " + file.getAbsolutePath());
 
-                inputImage = file.getName();
+                inputImage = file.getAbsolutePath();
                 System.out.println(inputImage);
 
-                outputImage = file.getName() + "_." + formatName;
+                outputImage = file.getAbsolutePath() + "_." + formatName;
                 System.out.println(outputImage);
 
 
