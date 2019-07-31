@@ -15,6 +15,7 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
     private JButton convert;
     private JButton selectingPictureButton;
     private JButton selectingFormatButton;
+    private JTextArea showingInformation;
     private boolean fileIsSelected = false;
     private boolean formatIsSelected = false;
 
@@ -25,25 +26,19 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
      */
     static String stripExtension (String str) {
         // Handle null case specially.
-
         if (str == null) return null;
-
         // Get position of last '.'.
-
         int pos = str.lastIndexOf(".");
-
         // If there wasn't any '.' just return the string as is.
-
         if (pos == -1) return str;
-
         // Otherwise return the string, up to the dot.
-
         return str.substring(0, pos);
     }
 
     public GraphicalUserInterface(){
 
         super("IMAGE FORMAT CONVERTER");
+        Font consolas = new Font("Consolas",Font.BOLD, 12);
         setLayout(new BorderLayout());
         setSize(500, 500);
         convert = new JButton("convert!");
@@ -51,6 +46,7 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
         convert.addActionListener(this);
         convert.setBorderPainted(false);
         convert.setFocusable(false);
+        convert.setFont(consolas);
 
         //filechooser
 
@@ -59,6 +55,8 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
         selectingPictureButton.setBorderPainted(false);
         selectingPictureButton.setFocusable(false);
         selectingPictureButton.setPreferredSize(new Dimension(85,30));
+        selectingPictureButton.setFont(consolas);
+
 
 
         //showing pop-up
@@ -67,6 +65,7 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
         selectingFormatButton.setBorderPainted(false);
         selectingFormatButton.setFocusable(false);
         selectingFormatButton.setPreferredSize(new Dimension(85,30));
+        selectingFormatButton.setFont(consolas);
 
         final JPopupMenu popup = new JPopupMenu();
         JMenuItem jpeg = new JMenuItem(new AbstractAction(".jpeg") {
@@ -125,11 +124,15 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
 
         JPanel selectingPicturePanel = new JPanel(new FlowLayout());
         JLabel selectingPictureLabel = new JLabel("SELECT AN IMAGE :");
+        selectingPictureLabel.setFont(consolas);
+
         selectingPicturePanel.add(selectingPictureLabel);
         selectingPicturePanel.add(selectingPictureButton);
 
         JPanel selectingFormatPanel = new JPanel(new FlowLayout());
         JLabel selectingFormatLabel = new JLabel("SELECT A FORMAT :");
+        selectingFormatLabel.setFont(consolas);
+
         selectingFormatPanel.add(selectingFormatLabel);
         selectingFormatPanel.add(selectingFormatButton);
 
@@ -138,6 +141,10 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
         formatAndImagePanel.add(selectingFormatPanel);
 
         JPanel showingTheInfoOfThePicturePanel = new JPanel();
+        showingInformation = new JTextArea();
+        showingInformation.setEditable(false);
+        showingInformation.setFont(consolas);
+        showingTheInfoOfThePicturePanel.add(showingInformation);
 
         add(formatAndImagePanel, BorderLayout.NORTH);
         add(showingTheInfoOfThePicturePanel, BorderLayout.CENTER);
@@ -155,6 +162,7 @@ public class GraphicalUserInterface extends JFrame implements ActionListener{
         outputImage = stripExtension(file.getAbsolutePath()) + "." + formatName;
         System.out.println(outputImage);
         convert.setText("Convert \"" + file.getName() + "\" to \"" + stripExtension(file.getName()) + "." + formatName + "\"!");
+        showingInformation.setText("\"" + file.getName() + "\" is going to be saved to the same path as a \" ." + formatName + " \" file:)");
     }
 
     @Override
